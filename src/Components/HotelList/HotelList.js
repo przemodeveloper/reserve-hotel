@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './HotelList.scss';
 import axios from 'axios';
 import Hotel from '../Hotel/Hotel';
+import { Link } from 'react-router-dom';
+import { DataProvider } from '../DataContext/DataContext';
 
 
 class HotelList extends Component {
@@ -9,7 +11,7 @@ class HotelList extends Component {
     state = {
         hotel: [],
         loading: true,
-        error: '',
+        error: false,
         nights: {},
         totalPrice: null
     }
@@ -85,33 +87,36 @@ class HotelList extends Component {
 
     render() {
         return(
-            <div>
-                {!this.state.loading ? <div>
-                    {this.state.hotel.map(htl => {
-                        return <div key={htl.id} >
-                                    <hr/>
-                                        <Hotel 
-                                        id={htl.id}
-                                        title={htl.hotel} 
-                                        description={htl.description} 
-                                        price={htl.price} 
-                                        image={htl.photoURL}
-                                        nights={this.state.nights}
-                                        addNights={this.addNights}
-                                        removeNights={this.removeNights}
-                                        removeHotel={this.deleteHotel}/>
+            <DataProvider value={{
+                addNights: this.addNights,
+                removeNights: this.removeNights,
+                deleteHotel: this.deleteHotel,
+                nights: this.state.nights
+            }}>
+                {!this.state.error ? <div className="box">
+                    {!this.state.loading ? <div>
+                        {this.state.hotel.map(htl => {
+                            return <div key={htl.id} >
+                                        <hr/>
+                                            <Hotel 
+                                            id={htl.id}
+                                            title={htl.hotel} 
+                                            description={htl.description} 
+                                            price={htl.price} 
+                                            image={htl.photoURL}
+                                            />
+                                    </div>
+                                })}
+                                <div className="sum">
+                                    <p>${this.state.totalPrice}</p>
+                                    <Link to="/payment">BUY</Link>
                                 </div>
-                            })}
-                            <p>Total price: ${this.state.totalPrice}</p>
-                </div> : <div className="ring"><div className="lds-dual-ring"></div></div>}
-                
-            </div>
+                    </div> : <div className="ring"><div className="lds-dual-ring"></div></div>}
+                </div> : <p>Something went wrong!</p>}
+            </DataProvider>
     
         );
-
     }
-
-
 };
 
 export default HotelList;

@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Hotel.scss';
+import DataContext from '../DataContext/DataContext';
 
-const Hotel = ({ id, title, description, price, image, nights, addNights, removeNights, removeHotel }) => {
+
+const Hotel = ({ id, title, description, price, image }) => {
+
+    const data = useContext(DataContext);
+
     return(
         <div className="container">
             <div className="img">
@@ -13,12 +18,12 @@ const Hotel = ({ id, title, description, price, image, nights, addNights, remove
             </div>
             <div className="vl"></div>
             <div className="price">
-                <button onClick={() => removeNights(id)}>-</button>
-                <input type="number" value={nights[id]}/>
-                <button onClick={() => addNights(id)}>+</button>
+                <button onClick={() => data.removeNights(id)}>-</button>
+                <input type="number" value={data.nights[id]}/>
+                <button onClick={() => data.addNights(id)}>+</button>
             </div>
             <div className="inner-container">
-                <i onClick={() => removeHotel(id)} className="fas fa-trash"></i>
+                <i onClick={() => data.deleteHotel(id)} className="fas fa-trash"></i>
                 <p>${price}</p>
             </div>
         </div>

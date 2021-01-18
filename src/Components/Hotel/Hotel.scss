@@ -36,7 +36,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: row;
+
 
         input[type='number']::-webkit-inner-spin-button, 
         input[type='number']::-webkit-outer-spin-button { 
@@ -54,14 +54,6 @@
         button {
             height: 29px;
             width: 29px;
-        }
-
-        button:first-child {
-            margin-right: 10px;
-        }
-
-        button:last-child {
-            margin-left: 10px;
         }
         
     }
@@ -81,3 +73,43 @@
       }
 
 }
+
+
+  @media screen and (max-width: 600px) {
+      .container {
+        .price {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+    
+        button:first-child {
+            margin-top: 10px;
+            margin-right: 0px;
+        }
+    
+        button:last-child {
+            margin-bottom: 10px;
+            margin-left: 0px;
+        }
+
+        .inner-container {
+            margin-right: 50px;
+        }
+    
+        .img {
+    
+            position: relative;
+            width: 170px;
+            height: 170px;
+            overflow: hidden;
+            margin-left: 50px;
+    
+            img {
+                width: 85%;
+                height: 85%;
+            }
+        }
+
+      }
+    
+  }
